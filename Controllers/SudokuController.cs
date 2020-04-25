@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace SudokuSolver.Controllers
 {
@@ -28,15 +29,15 @@ namespace SudokuSolver.Controllers
         public string GetList()
         {
             Stopwatch stopWatch = new Stopwatch();
-            JavaScriptSerializer ser = new JavaScriptSerializer();
-
+            
             stopWatch.Start();
-            dynamic list = new Board() {Name="board1"};
+            Board list = new Board() {Name="board1"};
             stopWatch.Stop();
             
-            
-            var result = ser.Serialize(list);
-            result.ElaspsedTime = $"Elapsed time is {stopWatch.ElapsedMilliseconds} ms";
+             list.GeneratedTime = $"Elapsed time is {stopWatch.ElapsedMilliseconds} ms";
+            var result = JsonConvert.SerializeObject(list);
+
+
             return result;
         }
 
